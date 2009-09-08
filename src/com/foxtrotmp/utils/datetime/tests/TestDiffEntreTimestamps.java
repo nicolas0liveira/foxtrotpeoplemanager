@@ -18,7 +18,7 @@ public class TestDiffEntreTimestamps {
 
 		// Defini��o...
 		SimpleDateFormat BrasilTimestampFormat = new SimpleDateFormat(
-				"dd 'de' MMMM 'de' yyyy" + " '�s' HH:mm:ss ", new Locale("pt",
+				"dd 'de' MMMM 'de' yyyy" + " 'às' HH:mm:ss ", new Locale("pt",
 						"BR"));
 		try {
 			// Simulando informa��o que chega pelo BD (entrada e sa�da)
@@ -39,7 +39,7 @@ public class TestDiffEntreTimestamps {
 			// Testando se posso fazer a diferen�a
 			if (ts2.after(ts1)) {
 				System.out
-						.println("\n--\nRealizando c�lculo da diferen�a (ts2-ts1):");
+						.println("\n--\nRealizando cálculo da diferença (ts2-ts1):");
 				Timestamp tsResultado = new Timestamp(ts2.getTime()
 						- ts1.getTime());
 
@@ -55,7 +55,7 @@ public class TestDiffEntreTimestamps {
 								.getTime()));
 
 			} else {
-				System.out.println("TS1 � maio que TS2. Hora negativa?");
+				System.out.println("TS1 é maior que TS2. Hora negativa?");
 			}
 
 		} catch (ParseException e) {
