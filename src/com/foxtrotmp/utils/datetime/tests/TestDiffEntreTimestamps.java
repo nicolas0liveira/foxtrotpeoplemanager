@@ -1,12 +1,10 @@
-package com.foxtrotmp.utils.datetime.tests;
+package com.foxtrot-app.utils.datetime.tests;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import com.foxtrotmp.utils.datetime.TimestampHandler;
 
 public class TestDiffEntreTimestamps {
 
@@ -16,12 +14,12 @@ public class TestDiffEntreTimestamps {
 		SimpleDateFormat mysqlTimestampFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 
-		// Definição...
+		// Definiï¿½ï¿½o...
 		SimpleDateFormat BrasilTimestampFormat = new SimpleDateFormat(
-				"dd 'de' MMMM 'de' yyyy" + " 'às' HH:mm:ss ", new Locale("pt",
+				"dd 'de' MMMM 'de' yyyy" + " 'ï¿½s' HH:mm:ss ", new Locale("pt",
 						"BR"));
 		try {
-			// Simulando informação que chega pelo BD (entrada e saída)
+			// Simulando informaï¿½ï¿½o que chega pelo BD (entrada e saï¿½da)
 			Date date1 = mysqlTimestampFormat.parse("2009-09-07 13:42:07");
 			Date date2 = mysqlTimestampFormat.parse("2009-09-07 17:52:07");
 
@@ -36,10 +34,10 @@ public class TestDiffEntreTimestamps {
 			System.out.println("ts2 formatado: "
 					+ BrasilTimestampFormat.format(date2));
 
-			// Testando se posso fazer a diferença
+			// Testando se posso fazer a diferenï¿½a
 			if (ts2.after(ts1)) {
 				System.out
-						.println("\n--\nRealizando cálculo da diferença (ts2-ts1):");
+						.println("\n--\nRealizando cï¿½lculo da diferenï¿½a (ts2-ts1):");
 				Timestamp tsResultado = new Timestamp(ts2.getTime()
 						- ts1.getTime());
 
@@ -55,7 +53,7 @@ public class TestDiffEntreTimestamps {
 								.getTime()));
 
 			} else {
-				System.out.println("TS1 é maio que TS2. Hora negativa?");
+				System.out.println("TS1 ï¿½ maio que TS2. Hora negativa?");
 			}
 
 		} catch (ParseException e) {
