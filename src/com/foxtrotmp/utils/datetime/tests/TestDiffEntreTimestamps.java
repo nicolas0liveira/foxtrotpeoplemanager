@@ -1,10 +1,12 @@
-package com.foxtrot-app.utils.datetime.tests;
+package com.foxtrotmp.utils.datetime.tests;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import com.foxtrotmp.utils.datetime.TimestampHandler;
 
 public class TestDiffEntreTimestamps {
 
