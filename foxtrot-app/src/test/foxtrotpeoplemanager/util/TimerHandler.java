@@ -6,15 +6,19 @@ package test.foxtrotpeoplemanager.util;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Implementation of time handler functions.
+ * This class goals is a time manipulate.
+ * Its responsible to do operations with timestamps and so on.
  * 
  * @version: 1.0
  * @author: Nicolas Oliveira
  **/
 public class TimerHandler {
+	
+	private Calendar calendar = Calendar.getInstance();
 
 	
 	/**
@@ -46,4 +50,6 @@ public class TimerHandler {
 		return ts;
 			
 	}
+	
+
 }
