@@ -2,7 +2,7 @@
  * Copyright 2009 FoxtrotSystem.
  * */
 
-package com.foxtrotmp.utils.datetime;
+package com.foxtrot.utils.datetime;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

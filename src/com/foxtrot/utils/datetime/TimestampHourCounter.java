@@ -1,4 +1,4 @@
-package com.foxtrotmp.utils.datetime;
+package com.foxtrot.utils.datetime;
 
 public class TimestampHourCounter {
 

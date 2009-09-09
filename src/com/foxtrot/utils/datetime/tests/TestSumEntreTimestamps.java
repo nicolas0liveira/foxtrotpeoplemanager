@@ -1,4 +1,4 @@
-package com.foxtrotmp.utils.datetime.tests;
+package com.foxtrot.utils.datetime.tests;
 
 import java.util.Date;
 
