@@ -3,10 +3,6 @@
  */
 package test.foxtrotpeoplemanager.util;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -18,38 +14,117 @@ import java.util.Date;
  **/
 public class TimerHandler {
 	
-	private Calendar calendar = Calendar.getInstance();
-
-	
-	/**
-	 * This method receives a timestamp as String and return a object
-	 * sql.Timestamp.
-	 * 
-	 * @param timestamp
-	 *            The timestamp as String (Probably from a mysql database)
-	 * @return sql.Timestamp based on timestampString
-	 * 
-	 * @throws ParseException
-	 *             on the conversion
-	 */
-	public Timestamp timeStringToTimestamp(String timestamp){
+	public long getDifYear(Date time1, Date time2){
+		Date dayAfter = null;
+		Date dayBefore = null;
 		
-		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		Timestamp ts = null;
-		Date date;
-		
-		try {
-			date = timeFormat.parse(timestamp);
-			ts = new Timestamp(date.getTime());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	
-		
-		return ts;
+		if(time1.getTime() >= time2.getTime()){
+			dayAfter = time1;
+			dayBefore = time2;
 			
+		} else{
+			dayAfter = time2;
+			dayBefore = time1;
+		}
+		
+		return dayAfter.getYear() - dayBefore.getYear();
+		 
 	}
 	
+	public long getDifMonth(Date time1, Date time2){
+		Date dayAfter = null;
+		Date dayBefore = null;
+		
+		if(time1.getTime() >= time2.getTime()){
+			dayAfter = time1;
+			dayBefore = time2;
+			
+		} else{
+			dayAfter = time2;
+			dayBefore = time1;
+		}
+		
+		
+		return dayAfter.getMonth() - dayBefore.getMonth() + 
+			this.getDifYear(dayAfter, dayBefore)*12;  
+	}
+	
+	public long getDifDay(Date time1, Date time2){
+		Date dayAfter = null;
+		Date dayBefore = null;
+		
+		if(time1.getTime() >= time2.getTime()){
+			dayAfter = time1;
+			dayBefore = time2;
+			
+		} else{
+			dayAfter = time2;
+			dayBefore = time1;
+		}
+		
+		 return (dayAfter.getTime() - dayBefore.getTime()) / (1000*60*60*24);
+	}
+	
+	public long getDifHour(Date time1, Date time2){
+		Date dayAfter = null;
+		Date dayBefore = null;
+		
+		if(time1.getTime() >= time2.getTime()){
+			dayAfter = time1;
+			dayBefore = time2;
+			
+		} else{
+			dayAfter = time2;
+			dayBefore = time1;
+		}	
+		
+		return (dayAfter.getTime() - dayBefore.getTime()) / (1000*60*60);
+	}
+	
+	public long getDifMin(Date time1, Date time2){
+		Date dayAfter = null;
+		Date dayBefore = null;
+		
+		if(time1.getTime() >= time2.getTime()){
+			dayAfter = time1;
+			dayBefore = time2;
+			
+		} else{
+			dayAfter = time2;
+			dayBefore = time1;
+		}	
+		
+		return (dayAfter.getTime() - dayBefore.getTime()) / (1000*60);
+	}
+	
+	public long getDifSec(Date time1, Date time2){
+		Date dayAfter = null;
+		Date dayBefore = null;
+		
+		if(time1.getTime() >= time2.getTime()){
+			dayAfter = time1;
+			dayBefore = time2;
+			
+		} else{
+			dayAfter = time2;
+			dayBefore = time1;
+		}		
+		return (dayAfter.getTime() - dayBefore.getTime()) / (1000);
+	}
 
+	public long getDifMiliSec(Date time1, Date time2){
+		Date dayAfter = null;
+		Date dayBefore = null;
+		
+		if(time1.getTime() >= time2.getTime()){
+			dayAfter = time1;
+			dayBefore = time2;
+			
+		} else{
+			dayAfter = time2;
+			dayBefore = time1;
+		}
+		
+		return dayAfter.getTime() - dayBefore.getTime();
+	}
 }
