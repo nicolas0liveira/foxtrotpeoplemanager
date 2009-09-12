@@ -16,9 +16,9 @@ public class TestDiffEntreTimestamps {
 		SimpleDateFormat mysqlTimestampFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 
-		// Defini��o...
+		// Definindo um formato qualquer...
 		SimpleDateFormat BrasilTimestampFormat = new SimpleDateFormat(
-				"dd 'de' MMMM 'de' yyyy" + " 'às' HH:mm:ss ", new Locale("pt",
+				"dd 'de' MMMM 'de' yyyy 'às' HH:mm:ss ", new Locale("pt",
 						"BR"));
 		try {
 			// Simulando informa��o que chega pelo BD (entrada e sa�da)

@@ -1,43 +1,32 @@
 create table people	(
-			id 			int not null auto_increment,
-	 		name 		varchar(30) not null,
-	 		lastname	varchar(30),
-			cpf			varchar(11) not null,
-	 		address	 	varchar(10),
-	 		fone 		varchar(7),
-	 		birthday	date,
-			gender 		char(1),
-			status		char(1),
+			id 				int not null auto_increment,
+	 		name 			varchar(30) not null,
+	 		lastname		varchar(30) not null,
+			cpf				varchar(11) not null,
+	 		address	 		varchar(10),
+	 		fone 			varchar(7),
+	 		birthday		date,
+			gender 			char(1),
+			status			char(1),
 			
 	constraint pkpeople	primary key(id, cpf)
 );
 
 
-create table entrance	(
+create table wayinout	(
 			id	 			int not null auto_increment,
+			id_in			int not null auto_increment,
+			id_out			int null,
 			id_people 		int not null,
 			id_rec_mode		int not null,
 			id_location		int not null,
 			id_sensor		int not null,
 			id_wayout		int not null,
+			id_wayin		int not null,
 			db_timestamp	timestamp,
 			sys_timestamp	timestamp,
 
-	constraint  pkentrance primary key (id)
-);
-
-
-create table wayout	(
-			id				int not null auto_increment,	
-			id_people 		int not null,
-			id_rec_mode		int not null,
-			id_location		int not null,
-			id_sensor		int not null,
-			id_entrance		int not null,
-			db_timestamp	timestamp,
-			sys_timestamp	timestamp,
-	
-	constraint pkwayout primary key(id)
+	constraint  pkentrance primary key (id, id_in, id_out)
 );
 
 
@@ -76,8 +65,8 @@ create table recognition_mode	(
 	constraint pkrec_mode primary key(id)
 );
 
-
-
+--Constraints for wayin table:
+--		id_people
 alter table entrance add constraint fkid_people 
       foreign key (id_people) references people(id) 
 	ON DELETE CASCADE ON UPDATE CASCADE;
