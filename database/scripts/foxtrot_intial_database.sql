@@ -16,12 +16,12 @@ create table people	(
 create table wayinout	(
 			id	 				int not null auto_increment,
 			id_in				int not null auto_increment, 
-			id_out				int	not	null auto_increment,
+			id_out				int	null, 	--Precisamos desenvolver uma maneira de gerar um identificador único para a sáida apenas quando ela for consolidada
 			id_people 			int not null,
 			id_rec_mode_in		int not null,
 			id_rec_mode_out		int not null,
-			id_sensor_in		int not null,
-			id_sensor_out		int not null,
+			id_sensor_in		int null, 	--Deve ser nulo pois existem maneiras de uma pessoa ser identificada sem que seja atraves de um sensor (i.e. gerente)
+			id_sensor_out		int null,	--Deve ser nulo pois existem maneiras de uma pessoa ser identificada sem que seja atraves de um sensor (i.e. gerente)
 			db_timestamp_in		timestamp,
 			sys_timestamp_in	timestamp,
 			db_timestamp_out	timestamp,
