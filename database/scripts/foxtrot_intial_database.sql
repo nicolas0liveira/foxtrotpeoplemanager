@@ -2,14 +2,15 @@ create table people	(
 			id 				int not null auto_increment,
 	 		name 			varchar(30) not null,
 	 		lastname		varchar(30) not null,
-			cpf				varchar(11) not null,
+	 		rg				varchar(20) not null
+			cpf				varchar(11),
 	 		address	 		varchar(10),
 	 		fone 			varchar(7),
 	 		birthday		date,
 			gender 			char(1),
 			status			char(1),
 			
-	constraint pkpeople	primary key(id, cpf)
+	constraint pkpeople	primary key(id, rg)
 );
 
 create table wayinout	(
@@ -26,7 +27,7 @@ create table wayinout	(
 			db_timestamp_out	timestamp,
 			sys_timestamp_out	timestamp,
 			
-	constraint  pkentrance primary key (id, id_in, id_out)
+	constraint  pkways primary key (id, id_in, id_out)
 );
 
 
@@ -52,8 +53,8 @@ create table sensorstatus(
 create table location(
 			id 				int not null auto_increment,
 			comment			varchar(500) not null,
-			l				int,
-			lon				int,
+			latitude		int,
+			longitude		int,
 
 	constraint pksensor primary key (id)
 );
@@ -68,8 +69,8 @@ create table recognition_mode	(
 
 
 create table log	(
-			id 				int not null auto_increment,
-			comment 		varchar(3000),
+			 id 			int not null auto_increment,
+			 comment 		varchar(3000),
 	
 	constraint pklog primary key(id)
 );
