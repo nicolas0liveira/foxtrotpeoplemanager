@@ -83,14 +83,25 @@ create table log	(
 	constraint pklog primary key(id)
 );
 
+--Constraints for wayinout table:
+--		id_people
+alter table wayinout add constraint fkid_people 
+      foreign key (id_people) references people(id) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
+	
+
+
+/*
 --Constraints for wayin table:
 --		id_people
 alter table entrance add constraint fkid_people 
       foreign key (id_people) references people(id) 
 	ON DELETE CASCADE ON UPDATE CASCADE;
 	
+--id_rec_mode	
+	
 alter table entrance add constraint fkid_rec_mode 
       foreign key (id_rec_mode) references people(recognition_mode)
 	ON DELETE CASCADE ON UPDATE CASCADE;
-
-
+*/
+	
