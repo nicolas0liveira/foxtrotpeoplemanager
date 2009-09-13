@@ -27,25 +27,33 @@ create table wayinout	(
 			db_timestamp_out	timestamp,
 			sys_timestamp_out	timestamp,
 			
-	constraint  pkways primary key (id, id_in, id_out)
+	constraint  pkways primary key (id, id_in, id_out) --Após a mudança do id_out, as chaves primárias precisam ser revistas
 );
 
 
 create table sensor	(
-			id 				int not null auto_increment,
-			sensor_uuid		int not null,
-			id_location		int not null,
-			id_status		int not null,
-			id_rec_mode		int not null,
-			comment			varchar(500) not null,
-			brand			varchar(100),
+			id 					int not null auto_increment,
+			sensor_uuid			int not null,
+			first_activation	timestamp,
+			last_activation		timestamp,
+			last_activity		timestamp,
+			id_location			int not null,
+			id_status			int not null,
+			id_rec_mode			int not null,
+			connection_type		char(1), 		--Tipo de conexão (i.e. USB, Paralela)
+			brand				varchar(100),
+			model				varchar(50),
+			comment				varchar(1000) not null,
 
 	constraint pksensor primary key (id, sensor_uuid)
 );
 
 create table sensorstatus(
 			id 				int not null auto_increment,
-			comment			varchar(500) not null,
+			label			varchar(30), 
+			enabled			boolean,
+			maintenance		boolean,
+			comment			varchar(1000) not null,
 
 	constraint pksensor primary key (id)
 );
