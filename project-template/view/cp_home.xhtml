@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<head>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<title>@app@ - v.@version-app@</title>
+</head>
+<body>
+<h:form>
+
+	<f:facet name="beforeInvalidField">
+		<h:graphicImage styleClass="errorImg" value="error.png" />
+	</f:facet>
+	<f:facet name="afterInvalidField">
+		<s:message styleClass="errorMsg" />
+	</f:facet>
+	<f:facet name="aroundInvalidField">
+		<s:div styleClass="error" />
+	</f:facet>
+
+	<s:validateAll>
+		<s:decorate>
+			<h:inputText value="#{person.email}" size="15" />
+		</s:decorate>
+	</s:validateAll>
+
+	<h:commandButton type="submit" value="Update"
+		action="#{personBusiness.add}" />
+</h:form>
+
+</body>
+</html>

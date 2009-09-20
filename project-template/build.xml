@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<project name="build" basedir="." default="deploy">
+
+	<!--
+		Este monta os modulo de uma aplicacao JEE, com base nos atributos contidos no build.properties.
+		Este xml esta completamente comentado para garantir alteracoes no futuro.
+		
+		FUTURA MELHORIAS:
+			Implementar uma tarefa que executa o compile independente da IDE.
+			(ver build.properties, atributo folder.compile).
+		
+														Version 1.0.0, by andradesouza.bruno@gmail.com
+	-->
+	<property file="build.properties" />
+	<property name="meta-inf-compile" value="${folder.compile}/META-INF" />
+	<property name="web-inf-compile" value="${folder.compile}/WEB-INF" />
+	<property name="war" value="${app}.war" />
+	<property name="jar" value="${app}.jar" />
+	<property name="ear" value="${app}.ear" />
+
+	<!-- Tarefa que monta os XML com os valores de do build.properties. -->
+	<target name="resources">
+		<property name="meta-inf-resources" value="resources/META-INF" />
+		<property name="web-inf-resources" value="resources/WEB-INF" />
+		<mkdir dir="${folder.compile}" />
+
+		<!-- Manipulacao do META-INF -->
+		<delete dir="${meta-inf-compile}" />
+		<copy todir="${meta-inf-compile}">
+			<fileset dir="${meta-inf-resources}">
+				<include name="*.xml" />
+			</fileset>
+			<filterset>
+				<filter token="app" value="${app}" />
+				<filter token="domain" value="${domain}" />
+				<filter token="persistence-unit" value="${persistence-unit}" />
+				<filter token="jta-data-source" value="${jta-data-source}" />
+				<filter token="option-db-auto" value="${option-db-auto}" />
+				<filter token="show_sql" value="${show_sql}" />
+			</filterset>
+		</copy>
+
+		<!-- Manipulacao do WEB-INF -->
+		<delete dir="${web-inf-compile}" />
+		<copy todir="${web-inf-compile}">
+			<fileset dir="${web-inf-resources}">
+				<include name="*.xml" />
+			</fileset>
+			<filterset>
+				<filter token="app" value="${app}" />
+				<filter token="type-jndi-pattern" value="${type-jndi-pattern}" />
+				<filter token="debug" value="${debug}" />
+				<filter token="conversation-timeout" value="${conversation-timeout}" />
+			</filterset>
+		</copy>
+	</target>
+
+	<!-- Montando projeto WAR -->
+	<target name="war" depends="resources">
+		<property name="page.title" value="${folder.compile}/${page.main}" />
+		<copy todir="${folder.compile}">
+			<fileset dir="view">
+				<include name="${page.main}" />
+			</fileset>
+			<filterset>
+				<filter token="app" value="${app}" />
+				<filter token="version-app" value="${version-app}" />
+			</filterset>
+		</copy>
+		<war destfile="${folder.compile}/${war}" webxml="${web-inf-compile}/web.xml">
+			<webinf dir="${web-inf-compile}">
+				<!-- Todos os XML em WEB-INF, sao necessario no modulo WAR -->
+				<include name="*.xml" />
+			</webinf>
+			<!--
+				Caso seja necessario inserir mais library, sera necessario manualmente.
+				
+				Exemplo:
+				<lib file="<local>" includes="<files>" />
+				
+				<local>, local onde esta as libray /lib eh a pasta de library do SEAM.
+				<files>, por ser o nome unico, [frw-ppp.jar] ou [*.jar] ou [frw-*.jar] ou uma lista [lib1.jar;lib2.jar]
+			-->
+			<!-- LIBRAY SEAM -->
+			<lib dir="${seam.home}/lib" includes="jboss-seam-debug.jar" />
+			<lib dir="${seam.home}/lib" includes="jboss-seam-ui.jar" />
+			<lib dir="${seam.home}/lib" includes="jsf-facelets.jar" />
+		
+			<fileset dir="view" includes="**/*.*" excludes="${page.main}" />
+			<fileset file="${page.title}" />
+		</war>
+		<delete file="${page.title}" />
+	</target>
+
+	<!-- Montando o(s) pacote(s) EJB3JAR -->
+	<target name="ejb3jar" depends="resources">
+		<jar destfile="${folder.compile}/${jar}">
+			<fileset dir="${folder.compile}">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="${folder.compile}">
+				<!--
+					Insira aqui qualquer outro arquivo necessario para o ejb3jar-temp, geralmente arquivos de properties.
+					Atencao, qualquer outro arquivo declarado aqui, devara esta dentro caminho ${folder.compile}, mas vc pordera criar outra abstracao.
+				-->
+				<include name="seam.properties" />
+			</fileset>
+			<metainf dir="${meta-inf-compile}">
+				<!-- Liste os arquivos XML, necessario para o META-INF do ejb3 -->
+				<include name="persistence.xml" />
+				<include name="ejb-jar.xml" />
+			</metainf>
+		</jar>
+	</target>
+
+	<!-- Tarefa que monta o projeto EAR -->
+	<target name="ear" depends="resources,ejb3jar,war">
+		<ear destfile="${folder.compile}/${ear}" appxml="${meta-inf-compile}/application.xml">
+			<fileset dir="${folder.compile}" includes="*.jar, *.war" />
+			<metainf dir="${meta-inf-compile}">
+				<!-- Liste os arquivos XML, necessario para o META-INF do EAR -->
+				<include name="jboss-app.xml" />
+			</metainf>
+			<!--
+				Caso seja necessario inserir mais library, sera necessario manualmente.
+				<fileset dir="${<local.library>}">
+					<include name="lib/<nome da library>"/>
+					<include name="lib/*-<name>.jar"/>
+					<include name="lib/*.jar"/>
+				</fileset>
+				
+				Obs.: <local.library>, deve ser declarado no build.properties, veja o atributo seam.home.
+				
+				OBSEVER QUE O TOKEN "LIB/", INDICA QUE DEVERA SER CRIADA UMA PASTA LIB, DENTRO O EAR.
+				PARA O SEAM ISSO EH NECESSARIO, MAS PARA UM EJB3JAR E WAR NAO.
+			-->
+			<fileset dir="${seam.home}">
+				<include name="lib/jboss-seam.jar" />
+				<include name="lib/jboss-el.jar" />
+			</fileset>
+			<!-- Declare aqui os demais library para o projeto EAR -->
+		</ear>
+		<delete file="${folder.compile}/${war}" />
+		<delete file="${folder.compile}/${jar}" />
+	</target>
+
+	<!-- ABAIXO TAREFAS REFERENTE AO USO DO SERVIDOR DE APLICACAO WEB JEE -->
+
+	<!-- Tarefa que colcoca o projeto EAR no servidor web a aplicacao -->
+	<target name="deploy" depends="undeploy,ear">
+		<copy file="${folder.compile}/${ear}" todir="${home.deploy}" />
+		<delete file="${ear}" />
+	</target>
+
+	<!-- Tarefa que retira do servidor a applicacao WEB -->
+	<target name="undeploy">
+		<delete file="${home.deploy}/${ear}" />
+	</target>
+
+</project>

@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<head>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<title>@app@ - v.@version-app@</title>
+</head>
+<body>
+<h:form>
+	<s:decorate template="form.xhtml">
+		<ui:param name="required" value="false" />
+		<ui:define name="label">E-mail:</ui:define>
+		<h:inputText size="25" maxlength="100" value="#{person.email}" />
+	</s:decorate>
+	<s:decorate template="form.xhtml">
+		<ui:param name="required" value="true" />
+		<ui:define name="label">nome:</ui:define>
+		<h:inputText size="25" maxlength="100" value="#{person.name}" />
+	</s:decorate>
+	<h:commandButton type="submit" value="Update"
+		action="#{personBusiness.add(person)}" />
+</h:form>
+</body>
+</html>
