@@ -65,15 +65,6 @@
 		<echo>*        MONTANDO PACOTE WAR           *</echo>
 		<echo>****************************************</echo>
 		<property name="page.title" value="${folder.compile}/${page.main}" />
-		<copy todir="${folder.compile}">
-			<fileset dir="view">
-				<include name="${page.main}" />
-			</fileset>
-			<filterset>
-				<filter token="app" value="${app}" />
-				<filter token="version-app" value="${version-app}" />
-			</filterset>
-		</copy>
 		<war destfile="${folder.compile}/${war}" webxml="${web-inf-compile}/web.xml">
 			<webinf dir="${web-inf-compile}">
 				<!-- Todos os XML em WEB-INF, sao necessario no modulo WAR -->
@@ -93,8 +84,7 @@
 			<lib dir="${seam.home}/lib" includes="jboss-seam-ui.jar" />
 			<lib dir="${seam.home}/lib" includes="jsf-facelets.jar" />
 		
-			<fileset dir="view" includes="**/*.*" excludes="${page.main}" />
-			<fileset file="${page.title}" />
+			<fileset dir="view" includes="**/*.*" />
 		</war>
 		<delete file="${page.title}" />
 	</target>
