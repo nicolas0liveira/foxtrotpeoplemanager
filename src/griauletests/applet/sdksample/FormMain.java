@@ -32,7 +32,7 @@
  -------------------------------------------------------------------------------
  */
 
-package griauletests.applet.sample.com.griaule.fingerprintsdk.appletsample;
+package griauletests.applet.sdksample;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -31,7 +31,7 @@
 
  -------------------------------------------------------------------------------
  */
-package griauletests.applet.sample.com.griaule.fingerprintsdk.appletsample;
+package griauletests.applet.sdksample;
 
 import java.io.File;
 import java.io.FileOutputStream;
