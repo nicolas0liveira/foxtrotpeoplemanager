@@ -115,9 +115,10 @@ public class Util implements IStatusEventListener, IImageEventListener,
 	 */
 	private void initFingerprintSDK() {
 		try {
-			// install Fingerprint SDK files in a temporary directory
-			AppletInstaller.install(getClass().getResource(
-					"/FingerprintSDKLibs.zip"));
+			String grFingerNativeDirectory = System.getProperty("user.dir");
+
+			grFingerNativeDirectory = grFingerNativeDirectory
+					+ "/libs/Griaule/Fingerprint SDK Java 2009/bin/";
 
 			fingerprintSDK = new MatchingContext();
 			// Starts fingerprint capture.
