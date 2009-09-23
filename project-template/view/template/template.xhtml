@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+<head>
+	<link href="template/css/tmStyle.css" rel="stylesheet" type="text/css" />
+	<title>@app@ - v.@version-app@</title>
+</head>
+<body>
+	<!-- Cabecalho -->
+	<table width="100%" border="1" cellpadding="0" cellspacing="0">
+	<tr>
+		<td height="40%" width="100%">
+			<ui:insert name="header">
+				<ui:include src="tpHeader.xhtml" />
+			</ui:insert>
+		</td>
+	</tr>
+	</table>
+	
+	<!-- Corpo (Menu, Info Usuario e Body -->
+	<table width="100%" border="1" cellpadding="0" cellspacing="0">
+	<tr>
+		<td height="100%" width="10%">
+			<ui:insert name="menu">
+				<ui:include src="tpMenu.xhtml" />
+			</ui:insert>
+		</td>
+		<td height="100%" width="90%">
+			<ui:insert name="body">
+				<h:outputLabel value="body"/>
+			</ui:insert>
+		</td>
+	</tr>
+	</table>
+	
+	<!-- Rodape -->
+	<table width="100%" border="1" cellpadding="0" cellspacing="0">
+	<tr>
+		<td height="40%" width="100%">
+			<ui:insert name="footer">
+				<ui:include src="tpFooter.xhtml" />
+			</ui:insert>
+		</td>
+	</tr>
+	</table>	
+</body>
+
+</html>
