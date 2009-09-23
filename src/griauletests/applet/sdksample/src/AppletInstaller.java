@@ -31,7 +31,7 @@
 
  -------------------------------------------------------------------------------
  */
-package griauletests.applet.sdksample;
+package griauletests.applet.sdksample.src;
 
 import java.io.File;
 import java.io.FileOutputStream;

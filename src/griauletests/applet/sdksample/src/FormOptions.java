@@ -32,7 +32,7 @@
  -------------------------------------------------------------------------------
  */
 
-package griauletests.applet.sdksample;
+package griauletests.applet.sdksample.src;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
