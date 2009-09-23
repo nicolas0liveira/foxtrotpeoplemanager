@@ -30,9 +30,9 @@
  documentation and/or sample.
 
  -------------------------------------------------------------------------------
-*/
+ */
 
-package com.griaule.fingerprintsdk.appletsample;
+package griauletests.applet.sample.com.griaule.fingerprintsdk.appletsample;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -48,173 +48,165 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- *
+ * 
  * A panel for selecting colors for Regular/Match parameters, and whenever they
  * must be shown.
- *
- * For instance, it's used in the options frame, for choosing
- * the color used to draw the minutiaes the matched,
- * the color used to draw the minutiaes that did not match,
- * and to choose whenever they must be shown of not.
- *
+ * 
+ * For instance, it's used in the options frame, for choosing the color used to
+ * draw the minutiaes the matched, the color used to draw the minutiaes that did
+ * not match, and to choose whenever they must be shown of not.
+ * 
  */
 public class ColorPane extends JPanel {
 
-    //The "Buttons" used to select the desired color for regular/matched objects.
-    private JPanel canvasColorRegular;
-    private JPanel canvasColorMatched;
+	// The "Buttons" used to select the desired color for regular/matched
+	// objects.
+	private JPanel canvasColorRegular;
+	private JPanel canvasColorMatched;
 
-    //The CheckBoxes used to define whenever regular/matched objects must be shown.
-    private JCheckBox checkboxShowRegular;
-    private JCheckBox checkBoxShowMatched;
+	// The CheckBoxes used to define whenever regular/matched objects must be
+	// shown.
+	private JCheckBox checkboxShowRegular;
+	private JCheckBox checkBoxShowMatched;
 
+	// Stores the previous value of the regular/matched colors to be used, in
+	// case the user presses "Cancel".
+	private Color stateColorRegular;
+	private Color stateColorMatched;
 
-    //Stores the previous value of the regular/matched colors to be used, in case the user presses "Cancel".
-    private Color stateColorRegular;
-    private Color stateColorMatched;
+	// Stores the previous value of whener it must show regular/matched object,
+	// in case the user presses "Cancel".
+	private boolean stateShowRegular;
+	private boolean stateShowMatched;
 
-    //Stores the previous value of whener it must show regular/matched object, in case the user presses "Cancel".
-    private boolean stateShowRegular;
-    private boolean stateShowMatched;
+	/**
+	 * Creates a new ColorPane, with the given label and default color values.
+	 */
+	public ColorPane(String label, Color colorRegular, Color colorMatched) {
+		// Adds a border on this panel, with the specified label.
+		setBorder(BorderFactory.createTitledBorder(null, label));
 
+		// Creates a grid layout composed of 2 columns:
+		GridLayout gridLayout = new GridLayout(1, 2, 5, 5);
+		setLayout(gridLayout);
 
+		// Adds the color selection buttons on the left column
+		add(createChooserPanel(colorRegular, colorMatched));
+		// Adds this label to the right side of this panel
+		add(new JLabel("Double click the color to change it."));
+	}
 
+	/**
+	 * Saves the values chosen by the user, so that they can be actually used.
+	 * 
+	 * This is called after the "Ok" button is pressed on the Options Form.
+	 */
+	public void saveState() {
+		// Store current values on the state variables.
+		stateColorRegular = getColorRegular();
+		stateColorMatched = getColorMatched();
+		stateShowRegular = mustShowRegular();
+		stateShowMatched = mustShowMatched();
+	}
 
-    /**
-     * Creates a new ColorPane, with the given label and default color values.
-     */
-    public ColorPane(String label, Color colorRegular, Color colorMatched){
-        //Adds a border on this panel, with the specified label.
-        setBorder(BorderFactory.createTitledBorder(null, label));
+	/**
+	 * Restores configurations to their previous values.
+	 * 
+	 * This is called after the "Cancel" button is pressed on the Options Form.
+	 */
+	public void restoreState() {
+		// Restore state values into current variables.
+		canvasColorRegular.setBackground(stateColorRegular);
+		canvasColorMatched.setBackground(stateColorMatched);
+		checkboxShowRegular.setSelected(stateShowRegular);
+		checkBoxShowMatched.setSelected(stateShowMatched);
+	}
 
-        //Creates a grid layout composed of 2 columns:
-        GridLayout gridLayout = new GridLayout(1,2,5,5);
-        setLayout(gridLayout);
+	/**
+	 * Creates the panel used to choose the object's color and to choose if they
+	 * must be shown.
+	 */
+	private JPanel createChooserPanel(Color colorRegular, Color colorMatched) {
+		// Creates the new Panel, with 2 rows and 3 columns:
+		// On the first row, parameters for regular objects,
+		// on the second, parameters for matched objects.
+		// On the first column, a "Regular"/"Matched" Label,
+		// on the second, the color picker, and, on the third,
+		// a checkbox to choose if objects of that kind must be shown
+		JPanel panel = new JPanel();
+		GridLayout gridLayout = new GridLayout(2, 3, 5, 5);
+		panel.setLayout(gridLayout);
 
-        //Adds the color selection buttons on the left column
-        add(createChooserPanel(colorRegular,colorMatched));
-        //Adds this label to the right side of this panel
-        add(new JLabel("Double click the color to change it."));
-    }
+		// Line 1: Regular objects parameters.
+		panel.add(new JLabel("Regular:"));
 
-    /**
-     * Saves the values chosen by the user, so that they can be actually used.
-     *
-     * This is called after the "Ok" button is pressed on the Options Form.
-     */
-    public void saveState(){
-        //Store current values on the state variables.
-        stateColorRegular = getColorRegular();
-        stateColorMatched = getColorMatched();
-        stateShowRegular = mustShowRegular();
-        stateShowMatched = mustShowMatched();
-    }
+		// Creates the button to pick the desired color.
+		canvasColorRegular = new JPanel();
+		canvasColorRegular.setBackground(colorRegular);
+		panel.add(canvasColorRegular);
 
-    /**
-     * Restores configurations to their previous values.
-     *
-     * This is called after the "Cancel" button is pressed on the Options Form.
-     */
-    public void restoreState(){
-        //Restore state values into current variables.
-        canvasColorRegular.setBackground(stateColorRegular);
-        canvasColorMatched.setBackground(stateColorMatched);
-        checkboxShowRegular.setSelected(stateShowRegular);
-        checkBoxShowMatched.setSelected(stateShowMatched);
-    }
+		// Creates the checkBox used to select if objects must be shown.
+		checkboxShowRegular = new JCheckBox("Show", true);
+		panel.add(checkboxShowRegular);
 
-    /**
-     * Creates the panel used to choose the object's color and
-     * to choose if they must be shown.
-     */
-    private JPanel createChooserPanel(Color colorRegular, Color colorMatched){
-        //Creates the new Panel, with 2 rows and 3 columns:
-        //On the first row, parameters for regular objects,
-        //on the second, parameters for matched objects.
-        //On the first column, a "Regular"/"Matched" Label,
-        //on the second, the color picker, and, on the third,
-        //a checkbox to choose if objects of that kind must be shown
-        JPanel panel = new JPanel();
-        GridLayout gridLayout = new GridLayout(2,3,5,5);
-        panel.setLayout(gridLayout);
+		// Line 2: Matched objects parameters.
+		panel.add(new JLabel("Match:"), null);
 
+		// Creates the button to pick the desired color.
+		canvasColorMatched = new JPanel();
+		canvasColorMatched.setBackground(colorMatched);
+		panel.add(canvasColorMatched);
 
-        //Line 1: Regular objects parameters.
-        panel.add(new JLabel("Regular:"));
+		// Creates the checkBoxes used to select if objects must be shown
+		checkBoxShowMatched = new JCheckBox("Show", true);
+		panel.add(checkBoxShowMatched);
 
-        //Creates the button to pick the desired color.
-        canvasColorRegular = new JPanel();
-        canvasColorRegular.setBackground(colorRegular);
-        panel.add(canvasColorRegular);
+		// Creates a MouseListener to receive events when the user click
+		// the color selection buttons.
+		MouseListener colorChooserMouseListener = new MouseAdapter() {
+			// Handles clicks happen
+			public void mouseClicked(MouseEvent e) {
+				// Checks if it is a double-click
+				if (e.getClickCount() == 2) {
+					// Pick the button which has been pressed.
+					JComponent c = (JComponent) e.getSource();
 
-        //Creates the checkBox used to select if objects must be shown.
-        checkboxShowRegular = new JCheckBox("Show",true);
-        panel.add(checkboxShowRegular);
+					// Shows a dialog to select the new color.
+					Color newColor = JColorChooser.showDialog(getParent(),
+							"Color", c.getBackground());
 
+					// If the user did not press "Cancel" (newColor != null)
+					if (newColor != null)
+						// Uses the new color.
+						c.setBackground(newColor);
+				}
+			}
+		};
+		// Adds the mouseListener to the color selection buttons.
+		canvasColorRegular.addMouseListener(colorChooserMouseListener);
+		canvasColorMatched.addMouseListener(colorChooserMouseListener);
 
-        //Line 2: Matched objects parameters.
-        panel.add(new JLabel("Match:"),null);
+		// Returns the assembled panel
+		return panel;
+	}
 
-        //Creates the button to pick the desired color.
-        canvasColorMatched = new JPanel();
-        canvasColorMatched.setBackground(colorMatched);
-        panel.add(canvasColorMatched);
+	/** Returns the color that must be used to paint regular objects. */
+	public Color getColorRegular() {
+		return canvasColorRegular.getBackground();
+	}
 
-        //Creates the checkBoxes used to select if objects must be shown
-        checkBoxShowMatched = new JCheckBox("Show",true);
-        panel.add(checkBoxShowMatched);
+	/** Returns the color that must be used to paint matched objects. */
+	public Color getColorMatched() {
+		return canvasColorMatched.getBackground();
+	}
 
+	/** Returns whenever regular objects must be painted. */
+	public boolean mustShowRegular() {
+		return checkboxShowRegular.isSelected();
+	}
 
-
-
-
-        //Creates a MouseListener to receive events when the user click
-        //the color selection buttons.
-        MouseListener colorChooserMouseListener = new MouseAdapter() {
-            //Handles clicks happen
-            public void mouseClicked(MouseEvent e) {
-                //Checks if it is a double-click
-                if (e.getClickCount() == 2){
-                    //Pick the button which has been pressed.
-                    JComponent c = (JComponent) e.getSource();
-
-                    //Shows a dialog to select the new color.
-                    Color newColor = JColorChooser.showDialog(getParent(),"Color",c.getBackground());
-
-                    //If the user did not press "Cancel" (newColor != null)
-                    if (newColor!=null)
-                        //Uses the new color.
-                        c.setBackground(newColor);
-                }
-            }
-        };
-        //Adds the mouseListener to the color selection buttons.
-        canvasColorRegular.addMouseListener(colorChooserMouseListener);
-        canvasColorMatched.addMouseListener(colorChooserMouseListener);
-
-
-        //Returns the assembled panel
-        return panel;
-    }
-
-
-
-
-    /**Returns the color that must be used to paint regular objects.*/
-    public Color getColorRegular(){
-        return canvasColorRegular.getBackground();
-    }
-    /**Returns the color that must be used to paint matched objects.*/
-    public Color getColorMatched(){
-        return canvasColorMatched.getBackground();
-    }
-
-    /**Returns whenever regular objects must be painted.*/
-    public boolean mustShowRegular(){
-        return checkboxShowRegular.isSelected();
-    }
-    /**Returns whenever matched objects must be painted.*/
-    public boolean mustShowMatched(){
-        return checkBoxShowMatched.isSelected();
-    }
+	/** Returns whenever matched objects must be painted. */
+	public boolean mustShowMatched() {
+		return checkBoxShowMatched.isSelected();
+	}
 }
