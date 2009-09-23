@@ -20,12 +20,16 @@
 
 	<!-- Tarefa que monta os XML com os valores de do build.properties. -->
 	<target name="resources">
+		<echo>****************************************</echo>
+		<echo>*           MONTANDO RECURSOS          *</echo>
+		<echo>****************************************</echo>
 		<property name="meta-inf-resources" value="resources/META-INF" />
 		<property name="web-inf-resources" value="resources/WEB-INF" />
 		<mkdir dir="${folder.compile}" />
 
 		<!-- Manipulacao do META-INF -->
 		<delete dir="${meta-inf-compile}" />
+		
 		<copy todir="${meta-inf-compile}">
 			<fileset dir="${meta-inf-resources}">
 				<include name="*.xml" />
@@ -57,6 +61,9 @@
 
 	<!-- Montando projeto WAR -->
 	<target name="war" depends="resources">
+		<echo>****************************************</echo>
+		<echo>*        MONTANDO PACOTE WAR           *</echo>
+		<echo>****************************************</echo>
 		<property name="page.title" value="${folder.compile}/${page.main}" />
 		<copy todir="${folder.compile}">
 			<fileset dir="view">
@@ -94,6 +101,9 @@
 
 	<!-- Montando o(s) pacote(s) EJB3JAR -->
 	<target name="ejb3jar" depends="resources">
+		<echo>****************************************</echo>
+		<echo>*        MONTANDO PACOTE EJB3          *</echo>
+		<echo>****************************************</echo>
 		<jar destfile="${folder.compile}/${jar}">
 			<fileset dir="${folder.compile}">
 				<include name="**/*.class" />
@@ -115,6 +125,9 @@
 
 	<!-- Tarefa que monta o projeto EAR -->
 	<target name="ear" depends="resources,ejb3jar,war">
+		<echo>****************************************</echo>
+		<echo>*          MONTANDO PACOTE EAR         *</echo>
+		<echo>****************************************</echo>
 		<ear destfile="${folder.compile}/${ear}" appxml="${meta-inf-compile}/application.xml">
 			<fileset dir="${folder.compile}" includes="*.jar, *.war" />
 			<metainf dir="${meta-inf-compile}">
@@ -148,12 +161,18 @@
 
 	<!-- Tarefa que colcoca o projeto EAR no servidor web a aplicacao -->
 	<target name="deploy" depends="undeploy,ear">
+		<echo>****************************************</echo>
+		<echo>*          FAZENDO DEPLOY              *</echo>
+		<echo>****************************************</echo>
 		<copy file="${folder.compile}/${ear}" todir="${home.deploy}" />
 		<delete file="${ear}" />
 	</target>
 
 	<!-- Tarefa que retira do servidor a applicacao WEB -->
 	<target name="undeploy">
+		<echo>****************************************</echo>
+		<echo>*          FAZENDO UNDEPLOY            *</echo>
+		<echo>****************************************</echo>
 		<delete file="${home.deploy}/${ear}" />
 	</target>
 
