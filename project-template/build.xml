@@ -5,7 +5,7 @@
 		Este monta os modulo de uma aplicacao JEE, com base nos atributos contidos no build.properties.
 		Este xml esta completamente comentado para garantir alteracoes no futuro.
 		
-		FUTURA MELHORIAS:
+		FUTURAS MELHORIAS:
 			Implementar uma tarefa que executa o compile independente da IDE.
 			(ver build.properties, atributo folder.compile).
 		
@@ -69,6 +69,11 @@
 				<!-- Todos os XML em WEB-INF, sao necessario no modulo WAR -->
 				<include name="*.xml" />
 			</webinf>
+			<fileset dir="view" includes="**/*.*" />
+			<fileset dir="${folder.compile}">
+				<!-- Inserindo os arquivos de properties necessarios -->
+				<include name="messages_*.properties" />
+			</fileset>
 			<!--
 				Caso seja necessario inserir mais library, sera necessario manualmente.
 				
@@ -79,14 +84,14 @@
 				<files>, por ser o nome unico, [frw-ppp.jar] ou [*.jar] ou [frw-*.jar] ou uma lista [lib1.jar;lib2.jar]
 			-->
 			<!-- LIBRAY SEAM -->
-			<lib dir="${seam.home}/lib" includes="jboss-seam-debug.jar" />
-			<lib dir="${seam.home}/lib" includes="jboss-seam-ui.jar" />
-			<lib dir="${seam.home}/lib" includes="jsf-facelets.jar" />
-			<fileset dir="view" includes="**/*.*" />
-			<fileset dir="${folder.compile}">
-				<!-- Inserindo os arquivos de properties necessarios -->
-				<include name="messages_*.properties" />
-			</fileset>
+			<lib dir="${seam.home}/lib">
+				<include name="jboss-seam-ui.jar" />
+				<include name="jboss-seam-debug.jar" />
+				<include name="jsf-facelets.jar" />
+				<include name="richfaces-api.jar" />
+				<include name="richfaces-impl.jar" />
+				<include name="richfaces-ui.jar" />
+			</lib>
 		</war>
 		<delete file="${page.title}" />
 	</target>
@@ -146,11 +151,6 @@
 				<include name="lib/commons-beanutils.jar" />
 				<include name="lib/commons-collections.jar" />
 				<include name="lib/commons-codec.jar" />
-			</fileset>
-			<fileset dir="${reference.home}">
-				<include name="lib/commons-fileupload.jar" />
-				<include name="lib/icefaces*.jar" />
-				<include name="lib/backport*.jar" />
 			</fileset>
 			<!-- Declare aqui os demais library para o projeto EAR -->
 		</ear>

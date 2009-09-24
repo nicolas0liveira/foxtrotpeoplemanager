@@ -12,6 +12,7 @@
 	<title>#{msgs.title}</title>
 </head>
 <body>
+<h:form id="tpHome">
 	<!-- Cabecalho -->
 	<table width="100%" border="1" cellpadding="0" cellspacing="0">
 	<tr>
@@ -32,6 +33,7 @@
 			</ui:insert>
 		</td>
 		<td height="100%" width="90%">
+			<rich:calendar />
 			<ui:insert name="body">
 				<h:outputLabel value="body"/>
 			</ui:insert>
@@ -48,7 +50,8 @@
 			</ui:insert>
 		</td>
 	</tr>
-	</table>	
+	</table>
+</h:form>	
 </body>
 
 </html>
