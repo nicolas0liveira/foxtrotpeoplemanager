@@ -5,10 +5,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
-
+	
+	<f:loadBundle basename="#{facesContext.application.messageBundle}" var="msgs" />
 <head>
-	<link href="template/css/tmStyle.css" rel="stylesheet" type="text/css" />
-	<title>@app@ - v.@version-app@</title>
+	<link href="css/tmStyle.css" rel="stylesheet" type="text/css" />
+	<title>#{msgs.title}</title>
 </head>
 <body>
 	<!-- Cabecalho -->
